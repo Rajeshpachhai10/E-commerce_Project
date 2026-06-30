@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Myshop - Premium Electronics & Fashion">
+    <title>Home | Myshop</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- link CSS  -->
+     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+</head>
+
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header id="header">
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="#"><i class="fas fa-phone-alt me-1"></i> +977 9816107823</a>
+                    <span class="divider">|</span>
+                    <a href="#"><i class="fas fa-envelope me-1"></i> support@myshop.com</a>
+                </div>
+                <div class="d-none d-md-flex align-items-center gap-3">
+                    <span>Free shipping on orders over $99</span>
+                    <span class="divider">|</span>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="social-link" style="width:22px;height:22px;font-size:11px;border-radius:3px;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" style="width:22px;height:22px;font-size:11px;border-radius:3px;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" style="width:22px;height:22px;font-size:11px;border-radius:3px;"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">My<span>shop</span></a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-th me-2 text-muted" style="font-size:11px"></i>All Products</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-tags me-2 text-muted" style="font-size:11px"></i>Categories</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-shopping-cart me-2 text-muted" style="font-size:11px"></i>Cart</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-credit-card me-2 text-muted" style="font-size:11px"></i>Checkout</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+
+                <form class="nav-search d-flex me-3" role="search">
+                    <input class="form-control" type="search" placeholder="Search products...">
+                    <button class="btn-search" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <div class="d-flex align-items-center gap-1">
+                    <div class="dropdown">
+                        <a href="#" class="icon-btn" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2 text-muted" style="font-size:11px"></i>My Account</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-box me-2 text-muted" style="font-size:11px"></i>Orders</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2 text-muted" style="font-size:11px"></i>Wishlist</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-in-alt me-2 text-muted" style="font-size:11px"></i>Login</a></li>
+                        </ul>
+                    </div>
+                    <a href="#" class="icon-btn position-relative">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-badge">3</span>
+                    </a>
+                    <a href="#" class="icon-btn">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<!-- ==================== HERO SLIDER ==================== -->
+<section class="hero-section">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <div class="hero-slide slide-1">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 animate-up">
+                                <span class="hero-label">New Arrival 2025</span>
+                                <h1>Power Meets<br><em>Performance</em></h1>
+                                <p>Discover next-generation laptops engineered for creators, gamers, and professionals who demand more.</p>
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <a href="#" class="btn-primary-custom">Shop Now <i class="fas fa-arrow-right"></i></a>
+                                    <a href="#" class="btn-outline-custom">View All</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="hero-image-wrap">
+                                    <img src="{% static 'images/product-details/acer_2.png' %}" alt="Gaming Laptop">
+                                    <div class="hero-badge badge-price">
+                                        <span class="big">$1,020</span>
+                                        Starting from
+                                    </div>
+                                    <div class="hero-badge badge-rating">
+                                        <span class="stars">★★★★★</span>
+                                        4.9 · 2.4k Reviews
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <div class="hero-slide slide-2">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <span class="hero-label">Limited Edition</span>
+                                <h1>Engineered for<br><em>Creators</em></h1>
+                                <p>Razor-sharp displays, blazing fast processors, and stunning aesthetics. Designed to inspire.</p>
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <a href="#" class="btn-primary-custom">Explore Now <i class="fas fa-arrow-right"></i></a>
+                                    <a href="#" class="btn-outline-custom">Learn More</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="hero-image-wrap">
+                                    <img src="{% static 'images/product-details/acer_3.png' %}" alt="MSI Laptop">
+                                    <div class="hero-badge badge-price">
+                                        <span class="big">$2,245</span>
+                                        From
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <div class="hero-slide slide-3">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <span class="hero-label">Best Seller</span>
+                                <h1>Style Meets<br><em>Substance</em></h1>
+                                <p>Premium fashion and electronics curated for the discerning shopper. Free shipping on all orders.</p>
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <a href="#" class="btn-primary-custom">Shop Now <i class="fas fa-arrow-right"></i></a>
+                                    <a href="#" class="btn-outline-custom">View Deals</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="hero-image-wrap">
+                                    <img src="{% static 'images/product-details/acer_4.png' %}" alt="Product">
+                                    <div class="hero-badge badge-price">
+                                        <span class="big">30% Off</span>
+                                        Today Only
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</section>
+
+
+<!-- ==================== CATEGORIES ==================== -->
+<section class="categories-strip">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-laptop"></i></div>
+                    <h6>Laptops</h6>
+                    <span>128 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h6>Phones</h6>
+                    <span>94 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-tshirt"></i></div>
+                    <h6>Fashion</h6>
+                    <span>320 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-running"></i></div>
+                    <h6>Sports</h6>
+                    <span>156 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-headphones"></i></div>
+                    <h6>Audio</h6>
+                    <span>72 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-gamepad"></i></div>
+                    <h6>Gaming</h6>
+                    <span>89 items</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== FEATURES ITEMS + SIDEBAR ==================== -->
+<section class="section-py">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <aside class="shop-sidebar">
+
+                    <!-- Categories -->
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Categories</h4>
+                        <div class="accordion" id="catAccordion">
+                            <div class="accordion-item">
+                                <h5 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#catSports">
+                                        <i class="fas fa-running me-2" style="color:var(--accent);font-size:13px"></i> Sportswear
+                                        <span class="ms-auto badge" style="background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:600;border-radius:50px;padding:3px 8px;">5</span>
+                                    </button>
+                                </h5>
+                                <div id="catSports" class="accordion-collapse collapse show" data-bs-parent="#catAccordion">
+                                    <div class="accordion-body px-0 py-1">
+                                        <a href="#" class="sub-cat-link"><span>Nike</span><span class="count">(42)</span></a>
+                                        <a href="#" class="sub-cat-link"><span>Under Armour</span><span class="count">(36)</span></a>
+                                        <a href="#" class="sub-cat-link"><span>Adidas</span><span class="count">(28)</span></a>
+                                        <a href="#" class="sub-cat-link"><span>Puma</span><span class="count">(19)</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item" style="margin-top:4px">
+                                <h5 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#catMens">
+                                        <i class="fas fa-male me-2" style="color:var(--accent);font-size:13px"></i> Mens
+                                        <span class="ms-auto badge" style="background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:600;border-radius:50px;padding:3px 8px;">10</span>
+                                    </button>
+                                </h5>
+                                <div id="catMens" class="accordion-collapse collapse" data-bs-parent="#catAccordion">
+                                    <div class="accordion-body px-0 py-1">
+                                        <a href="#" class="sub-cat-link"><span>Fendi</span><span class="count">(24)</span></a>
+                                        <a href="#" class="sub-cat-link"><span>Gucci</span><span class="count">(18)</span></a>
+                                        <a href="#" class="sub-cat-link"><span>Versace</span><span class="count">(12)</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Filter by Price</h4>
+                        <div class="price-inputs">
+                            <div class="price-input-group">
+                                <label>Min</label>
+                                <input type="number" value="0" placeholder="$0">
+                            </div>
+                            <div style="color:var(--ink-muted);margin-top:20px;font-size:13px">—</div>
+                            <div class="price-input-group">
+                                <label>Max</label>
+                                <input type="number" value="3000" placeholder="$3000">
+                            </div>
+                        </div>
+                        <button class="btn-filter">Apply Filter</button>
+                    </div>
+
+                    <!-- Brands -->
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Popular Brands</h4>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b1" checked>
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b1">
+                                <span>Asus</span><span style="font-size:12px;color:var(--ink-muted)">(50)</span>
+                            </label>
+                        </div>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b2" checked>
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b2">
+                                <span>Razer</span><span style="font-size:12px;color:var(--ink-muted)">(31)</span>
+                            </label>
+                        </div>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b3">
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b3">
+                                <span>Lenovo</span><span style="font-size:12px;color:var(--ink-muted)">(44)</span>
+                            </label>
+                        </div>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b4">
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b4">
+                                <span>MSI</span><span style="font-size:12px;color:var(--ink-muted)">(27)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9">
+                <div class="section-header d-flex justify-content-between align-items-end">
+                    <div>
+                        <p class="section-tag">Handpicked</p>
+                        <h2 class="section-title">Featured Products</h2>
+                        <div class="section-line"></div>
+                    </div>
+                    <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="row g-3">
+                    <!-- Product 1 -->
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="product-card">
+                            <div class="product-image-area">
+                                <span class="product-badge new">New</span>
+                                <div class="product-actions">
+                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                </div>
+                                <img src="{% static 'images/product-details/acer_2.png' %}" alt="Lenovo Legion">
+                            </div>
+                            <div class="product-body">
+                                <div class="brand-tag">Lenovo</div>
+                                <p class="product-title">Legion 5 Gaming Laptop 15.6" AMD Ryzen 7 GTX 1660Ti 16GB RAM</p>
+                            </div>
+                            <div class="product-footer">
+                                <div class="product-price">$1,020 <span class="original">$1,299</span></div>
+                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="product-card">
+                            <div class="product-image-area">
+                                <span class="product-badge sale">Sale</span>
+                                <div class="product-actions">
+                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                </div>
+                                <img src="{% static 'images/product-details/acer_3.png' %}" alt="MSI GL66">
+                            </div>
+                            <div class="product-body">
+                                <div class="brand-tag">MSI</div>
+                                <p class="product-title">GL66 Gaming Laptop 15.6" 144Hz RTX 3070 Core i7 16GB 512GB</p>
+                            </div>
+                            <div class="product-footer">
+                                <div class="product-price">$2,245 <span class="original">$2,599</span></div>
+                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="product-card">
+                            <div class="product-image-area">
+                                <div class="product-actions">
+                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                </div>
+                                <img src="{% static 'images/product-details/acer_4.png' %}" alt="ASUS TUF">
+                            </div>
+                            <div class="product-body">
+                                <div class="brand-tag">Asus</div>
+                                <p class="product-title">TUF FX505DT Gaming Laptop 15.6" 120Hz Ryzen 5 GTX 1650 8GB</p>
+                            </div>
+                            <div class="product-footer">
+                                <div class="product-price">$1,245</div>
+                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="product-card">
+                            <div class="product-image-area">
+                                <span class="product-badge sale">−10%</span>
+                                <div class="product-actions">
+                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                </div>
+                                <img src="{% static 'images/product-details/mobile.png' %}" alt="iPhone 13">
+                            </div>
+                            <div class="product-body">
+                                <div class="brand-tag">Iphone 13</div>
+                                <p class="product-title">Blade 15 Base Gaming Laptop Core i7 GTX 1660Ti 16GB CNC Aluminum</p>
+                            </div>
+                            <div class="product-footer">
+                                <div class="product-price">$2,345 <span class="original">$2,599</span></div>
+                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 5 -->
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="product-card">
+                            <div class="product-image-area">
+                                <span class="product-badge new">New</span>
+                                <div class="product-actions">
+                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                </div>
+                                <img src="{% static 'images/product-details/hp.png' %}" alt="HP Laptop">
+                            </div>
+                            <div class="product-body">
+                                <div class="brand-tag">HP</div>
+                                <p class="product-title">Pavilion Gaming 15 Laptop i5-11300H GTX 1650 8GB 512GB SSD</p>
+                            </div>
+                            <div class="product-footer">
+                                <div class="product-price">$899</div>
+                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 6 -->
+                    <div class="col-sm-6 col-xl-4">
+                        <div class="product-card">
+                            <div class="product-image-area">
+                                <div class="product-actions">
+                                    <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                    <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                </div>
+                                <img src="{% static 'images/product-details/acer_4.png' %}" alt="Dell XPS">
+                            </div>
+                            <div class="product-body">
+                                <div class="brand-tag">Dell</div>
+                                <p class="product-title">XPS 15 OLED Laptop Core i9 RTX 3050Ti 32GB 1TB Platinum Silver</p>
+                            </div>
+                            <div class="product-footer">
+                                <div class="product-price">$1,799 <span class="original">$2,099</span></div>
+                                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== PROMO BANNER ==================== -->
+<section class="promo-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <p class="section-tag" style="color:rgba(200,169,110,0.7)">Flash Sale</p>
+                <h2>Up to <span>40% Off</span><br>Gaming Essentials</h2>
+                <p>Limited time offer. Don't miss out on our biggest sale of the year on premium gaming laptops and accessories.</p>
+                <div class="countdown">
+                    <div class="count-item">
+                        <span class="count-num" id="cnt-h">08</span>
+                        <span class="count-label">Hours</span>
+                    </div>
+                    <div class="count-item">
+                        <span class="count-num" id="cnt-m">42</span>
+                        <span class="count-label">Minutes</span>
+                    </div>
+                    <div class="count-item">
+                        <span class="count-num" id="cnt-s">17</span>
+                        <span class="count-label">Seconds</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-primary-custom" style="background:var(--accent);border-color:var(--accent)">
+                    Shop the Sale <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-lg-6 d-none d-lg-flex justify-content-end">
+                
+                <img src="https://m.media-amazon.com/images/I/61Ze2wc9nyS._AC_SL1500_.jpg" alt="Sale" style="max-width:380px;filter:drop-shadow(0 20px 60px rgba(0,0,0,0.4));transform:rotate(-3deg)">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== CATEGORY TABS ==================== -->
+<section class="category-tabs">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-4">
+                    <p class="section-tag">Browse by Category</p>
+                    <h2 class="section-title">Shop by Style</h2>
+                    <div class="section-line centered"></div>
+                </div>
+
+                <ul class="nav custom-tabs mb-4" id="shopTabs">
+                    <li class="nav-item"><a class="nav-link active" href="#tab-tshirt" data-bs-toggle="tab">T-Shirts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-blazers" data-bs-toggle="tab">Blazers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-sunglass" data-bs-toggle="tab">Sunglasses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-kids" data-bs-toggle="tab">Kids</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-polo" data-bs-toggle="tab">Polo Shirts</a></li>
+                </ul>
+
+                <div class="tab-content">
+                   
+                    <div class="tab-pane fade show active" id="tab-tshirt">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80" alt="T-Shirt">
+                                    <div class="price">$56</div>
+                                    <div class="name">Easy Polo Black Edition</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&q=80" alt="T-Shirt">
+                                    <div class="price">$48</div>
+                                    <div class="name">Classic White Crewneck</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=300&q=80" alt="T-Shirt">
+                                    <div class="price">$64</div>
+                                    <div class="name">Premium Stripe Tee</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&q=80" alt="T-Shirt">
+                                    <div class="price">$72</div>
+                                    <div class="name">Limited Edition Graphic</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-blazers">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=300&q=80" alt="Blazer">
+                                    <div class="price">$189</div>
+                                    <div class="name">Slim Fit Navy Blazer</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1594938298603-c8148c4b4c8a?w=300&q=80" alt="Blazer">
+                                    <div class="price">$245</div>
+                                    <div class="name">Classic Black Jacket</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-sunglass">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=300&q=80" alt="Sunglasses">
+                                    <div class="price">$129</div>
+                                    <div class="name">Aviator Polarized</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-kids">
+                        <div class="text-center py-4 text-muted">Kids collection coming soon.</div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-polo">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="https://images.unsplash.com/photo-1598522325074-042db73aa4e6?w=300&q=80" alt="Polo">
+                                    <div class="price">$89</div>
+                                    <div class="name">Classic Polo Navy</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== RECOMMENDED ==================== -->
+<section class="recommended-section">
+    <div class="container">
+        <div class="section-header d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <p class="section-tag">You Might Like</p>
+                <h2 class="section-title">Recommended for You</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="rec-carousel-nav">
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="recCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row g-3">
+                        
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="https://m.media-amazon.com/images/I/81w+3k4U8PL._AC_SL1500_.jpg" alt="Lenovo IdeaPad">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">Lenovo</div>
+                                    <p class="product-title">IdeaPad Gaming 3 Laptop Ryzen 5 GTX 1650</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$799</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="https://m.media-amazon.com/images/I/61Ze2wc9nyS._AC_SL1500_.jpg" alt="MSI GF63">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">MSI</div>
+                                    <p class="product-title">GF63 Thin Gaming Laptop i5 RTX 3050 8GB</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$949</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 d-none d-md-block">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="https://m.media-amazon.com/images/I/81w+3k4U8PL._AC_SL1500_.jpg" alt="Asus ROG">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">Asus</div>
+                                    <p class="product-title">ROG Zephyrus G14 Ryzen 9 RX 6700S 16GB</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$1,399</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 d-none d-lg-block">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="https://m.media-amazon.com/images/I/61Ze2wc9nyS._AC_SL1500_.jpg" alt="Razer Blade">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">Razer</div>
+                                    <p class="product-title">Blade 14 AMD Ryzen 9 RTX 3080 Ti 16GB 1TB</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$2,999</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== FEATURES STRIP ==================== -->
+<section class="features-strip">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <div>
+                        <h6>Free Shipping</h6>
+                        <p>On all orders over $99</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-undo-alt"></i></div>
+                    <div>
+                        <h6>Easy Returns</h6>
+                        <p>30-day hassle-free returns</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <h6>Secure Payments</h6>
+                        <p>100% protected transactions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <div>
+                        <h6>24/7 Support</h6>
+                        <p>We're always here to help</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+    <div class="footer-main">
+        <div class="container">
+
+            <!-- CTA Row -->
+            <div class="row g-4 footer-cta">
+                <div class="col-md-4">
+                    <div class="cta-item">
+                        <div class="cta-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h5>Find Us</h5>
+                            <p>1010 Avenue SW, Kathmandu, Nepal</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cta-item">
+                        <div class="cta-icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h5>Call Us</h5>
+                            <p>+977 9816107823</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cta-item">
+                        <div class="cta-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h5>Mail Us</h5>
+                            <p>support@myshop.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Links Row -->
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <div class="footer-brand-name">My<span>shop</span></div>
+                    <p class="footer-desc">Your one-stop destination for premium electronics and fashion. Curated quality, unbeatable prices.</p>
+                    <div class="footer-socials">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <h4 class="footer-heading">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Order Tracking</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="footer-heading">Newsletter</h4>
+                    <p style="font-size:13px;line-height:1.7;margin-bottom:12px;">Subscribe for exclusive deals, new arrivals, and style inspiration.</p>
+                    <div class="newsletter-input">
+                        <input type="email" placeholder="Your email address">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <p style="font-size:11px;margin-top:10px;color:rgba(255,255,255,0.3);">No spam. Unsubscribe at any time.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                <p>© 2025 Myshop. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Cookies</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Countdown Timer
+    function updateCountdown() {
+        let h = parseInt(document.getElementById('cnt-h').textContent);
+        let m = parseInt(document.getElementById('cnt-m').textContent);
+        let s = parseInt(document.getElementById('cnt-s').textContent);
+        s--;
+        if (s < 0) { s = 59; m--; }
+        if (m < 0) { m = 59; h--; }
+        if (h < 0) { h = 23; m = 59; s = 59; }
+        document.getElementById('cnt-h').textContent = String(h).padStart(2,'0');
+        document.getElementById('cnt-m').textContent = String(m).padStart(2,'0');
+        document.getElementById('cnt-s').textContent = String(s).padStart(2,'0');
+    }
+    setInterval(updateCountdown, 1000);
+
+    // Rec carousel nav
+    document.querySelectorAll('.rec-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = document.querySelector(btn.dataset.bsTarget);
+            const carousel = bootstrap.Carousel.getOrCreateInstance(target);
+            btn.dataset.bsSlide === 'prev' ? carousel.prev() : carousel.next();
+        });
+    });
+</script>
+
+</body>
+</html>

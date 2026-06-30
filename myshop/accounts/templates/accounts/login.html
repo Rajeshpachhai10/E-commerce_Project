@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Alertify CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css" />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            background-color: #f3f3f3;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Logo */
+        .auth-logo {
+            text-align: center;
+            margin: 2rem 0 1rem;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #131921;
+        }
+
+        .auth-logo span {
+            color: #ff9900;
+        }
+
+        /* Card */
+        .auth-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .auth-card h4 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: #131921;
+        }
+
+        /* Labels */
+        .auth-card label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #131921;
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        /* Inputs */
+        .auth-card input[type="text"],
+        .auth-card input[type="password"],
+        .auth-card input[type="email"] {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #a6a6a6;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .auth-card input[type="text"]:focus,
+        .auth-card input[type="password"]:focus,
+        .auth-card input[type="email"]:focus {
+            border-color: #e77600;
+            box-shadow: 0 0 0 3px rgba(228, 121, 17, 0.25);
+        }
+
+        /* Submit button */
+        .auth-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #ffd814;
+            border: 1px solid #fcd200;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #131921;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .auth-btn:hover {
+            background-color: #f7ca00;
+        }
+
+        /* Remember me row */
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #131921;
+            margin-top: 0.75rem;
+        }
+
+        /* Forgot password */
+        .auth-forgot {
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .auth-forgot a {
+            font-size: 0.8rem;
+            color: #0066c0;
+            text-decoration: none;
+        }
+
+        .auth-forgot a:hover {
+            text-decoration: underline;
+            color: #c45500;
+        }
+
+        /* Divider */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.2rem 0;
+            color: #767676;
+            font-size: 0.8rem;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .auth-divider span {
+            padding: 0 0.75rem;
+        }
+
+        /* Register link */
+        .auth-register-link {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #131921;
+        }
+
+        .auth-register-link a {
+            color: #0066c0;
+            text-decoration: none;
+        }
+
+        .auth-register-link a:hover {
+            text-decoration: underline;
+            color: #c45500;
+        }
+
+        /* Footer */
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: #767676;
+            padding-bottom: 2rem;
+        }
+
+        /* Field errors */
+        .field-error {
+            color: #c40000;
+            font-size: 0.78rem;
+            margin-top: 3px;
+        }
+
+        /* Password eye wrapper */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 2.5rem;
+        }
+
+        .toggle-eye {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #888;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Logo -->
+    <div class="auth-logo">My<span>Shop</span></div>
+
+    <!-- Login Card -->
+    <div class="auth-card">
+        <h4>Sign in</h4>
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <!-- Hidden next URL for redirect after login -->
+            <input type="hidden" value="{{ next }}" name="next">
+
+            <!-- Email field -->
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div class="field-error">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Password field manually rendered for eye toggle -->
+            <div class="mb-3">
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                <div class="password-wrapper">
+                    {{ form.password }}
+                    <button type="button" class="toggle-eye" id="togglePassword">
+                        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+                    </button>
+                </div>
+                {% if form.password.errors %}
+                <div class="field-error">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Remember me checkbox -->
+            <div class="remember-row">
+                <input type="checkbox" name="remember_me" id="remember_me" style="width:auto;">
+                <label for="remember_me" style="margin:0; font-weight:400;">Keep me signed in</label>
+            </div>
+
+            <!-- Forgot password link -->
+            <div class="auth-forgot mt-2">
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="auth-btn">Sign in</button>
+        </form>
+
+        <div class="auth-divider"><span>New to MyShop?</span></div>
+
+        <div class="auth-register-link">
+            <a href="{% url 'register' %}">Create your account</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="auth-footer">
+        &copy; 2026 MyShop. All rights reserved.
+    </div>
+
+    <!-- Alertify JS -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+
+    <!-- Django messages via Alertify -->
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+            <script>
+                alertify.set('notifier', 'position', 'top-right');
+                alertify.success('{{ message }}');
+                alertify.set('notifier', 'delay', 10);
+            </script>
+            {% else %}
+            <script>
+                alertify.set('notifier', 'position', 'top-right');
+                alertify.error('{{ message }}');
+                alertify.set('notifier', 'delay', 10);
+            </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <!-- Eye toggle - uses Django's rendered field id -->
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const input = document.getElementById('{{ form.password.id_for_label }}');
+            const icon = document.getElementById('eyeIcon');
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            icon.className = isPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+</html>
