@@ -1,0 +1,552 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+
+
+<!-- ==================== HERO SLIDER ==================== -->
+<section class="hero-section">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+
+
+        <div class="carousel-indicators">
+            {% for i in offer %}
+
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{forloop.counter0}}" class="{% if forloop.first %}
+            active
+            {% endif %}"></button>
+
+            {% endfor %}
+        </div>
+
+        <div class="carousel-inner">
+
+            {% for i in offer %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="hero-slide slide-1">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 animate-up">
+                                <span class="hero-label">New Arrivals</span>
+                                <h1>{{ i.title }}</h1>
+                                <p>{{ i.desc }}</p>
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <a href="#" class="btn-primary-custom">Shop Now <i
+                                            class="fas fa-arrow-right"></i></a>
+                                    <a href="#" class="btn-outline-custom">View All</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="hero-image-wrap">
+                                    <img src="{{ i.image.url }}" alt="{{ i.title }}">
+                                    <div class="hero-badge badge-price">
+                                        <span class="big">{{ i.price }}</span>
+                                        Starting from
+                                    </div>
+                                    <!-- <div class="hero-badge badge-rating">
+                                        <span class="stars">★★★★★</span>
+                                        4.9 · 2.4k Reviews
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</section>
+
+
+<!-- ==================== CATEGORIES ==================== -->
+<section class="categories-strip">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-laptop"></i></div>
+                    <h6>Laptops</h6>
+                    <span>128 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h6>Phones</h6>
+                    <span>94 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-tshirt"></i></div>
+                    <h6>Fashion</h6>
+                    <span>320 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-running"></i></div>
+                    <h6>Sports</h6>
+                    <span>156 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-headphones"></i></div>
+                    <h6>Audio</h6>
+                    <span>72 items</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="cat-card">
+                    <div class="cat-icon"><i class="fas fa-gamepad"></i></div>
+                    <h6>Gaming</h6>
+                    <span>89 items</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== FEATURES ITEMS + SIDEBAR ==================== -->
+<section class="section-py">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <aside class="shop-sidebar">
+
+                    <!-- Categories -->
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Categories</h4>
+                        <div class="accordion" id="catAccordion">
+                            {% for i in category %}
+                            <div class="accordion-item">
+
+
+                                <h5 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#{{i.id}}">
+
+                                        {{i.title}}
+                                        <span class="ms-auto badge"
+                                            style="background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:600;border-radius:50px;padding:3px 8px;">{{i.sub_count}}</span>
+                                    </button>
+                                </h5>
+                                <div id="{{i.id}}" class="accordion-collapse collapse show"
+                                    data-bs-parent="#catAccordion">
+
+
+                                    <div class="accordion-body px-0 py-1">
+                                        {% for j in i.subcategory_set.all %}
+                                        <a hx-get="?subcategory={{j.id}}" hx-push-url="true"
+                                            hx-target="#product_container" hx-swap="innerHTML"
+                                            class="sub-cat-link"><span>{{j.title}}</span><span
+                                                class="count">({{j.product_count}})</span></a>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <form hx-get="{% url 'index' %}" hx-target="#product_container" hx-swap="innerHTML">
+                        <div class="sidebar-widget">
+                            <h4 class="widget-title">Filter by Price</h4>
+                            <div class="price-inputs">
+                                <div class="price-input-group">
+                                    <label>Min</label>
+                                    <input type="number" name="min" value="0" placeholder="Rs.0">
+                                </div>
+                                <div style="color:var(--ink-muted);margin-top:20px;font-size:13px">—</div>
+                                <div class="price-input-group">
+                                    <label>Max</label>
+                                    <input type="hidden" name="subcategory" value="{{request.GET.subcategory}}"
+                                        placeholder="Rs.3000">
+                                    <input type="number" name="max" value="3000" placeholder="Rs.3000">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-filter">Apply Filter</button>
+                        </div>
+                    </form>
+
+                    <!-- Brands -->
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Popular Brands</h4>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b1" checked>
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b1">
+                                <span>Asus</span><span style="font-size:12px;color:var(--ink-muted)">(50)</span>
+                            </label>
+                        </div>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b2" checked>
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b2">
+                                <span>Razer</span><span style="font-size:12px;color:var(--ink-muted)">(31)</span>
+                            </label>
+                        </div>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b3">
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b3">
+                                <span>Lenovo</span><span style="font-size:12px;color:var(--ink-muted)">(44)</span>
+                            </label>
+                        </div>
+                        <div class="brand-check form-check">
+                            <input class="form-check-input" type="checkbox" id="b4">
+                            <label class="form-check-label d-flex justify-content-between w-100" for="b4">
+                                <span>MSI</span><span style="font-size:12px;color:var(--ink-muted)">(27)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9">
+                <div class="section-header d-flex justify-content-between align-items-end">
+                    <div>
+                        <p class="section-tag">Handpicked</p>
+                        <h2 class="section-title">Featured Products</h2>
+                        <div class="section-line"></div>
+                    </div>
+                    <a href="#" class="view-all-link">View All <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="row g-3" id="product_container">
+                    {% include "core/product.html" %}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== PROMO BANNER ==================== -->
+<section class="promo-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <p class="section-tag" style="color:rgba(200,169,110,0.7)">Flash Sale</p>
+                <h2>Up to <span>40% Off</span><br>Gaming Essentials</h2>
+                <p>Limited time offer. Don't miss out on our biggest sale of the year on premium gaming laptops and
+                    accessories.</p>
+                <div class="countdown">
+                    <div class="count-item">
+                        <span class="count-num" id="cnt-h">08</span>
+                        <span class="count-label">Hours</span>
+                    </div>
+                    <div class="count-item">
+                        <span class="count-num" id="cnt-m">42</span>
+                        <span class="count-label">Minutes</span>
+                    </div>
+                    <div class="count-item">
+                        <span class="count-num" id="cnt-s">17</span>
+                        <span class="count-label">Seconds</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-primary-custom" style="background:var(--accent);border-color:var(--accent)">
+                    Shop the Sale <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-lg-6 d-none d-lg-flex justify-content-end">
+                <img src="{% static 'images/promo/flash-sale.jpg' %}" alt="Sale"
+                    style="max-width:380px;filter:drop-shadow(0 20px 60px rgba(0,0,0,0.4));transform:rotate(-3deg)">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== CATEGORY TABS ==================== -->
+<section class="category-tabs">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-4">
+                    <p class="section-tag">Browse by Category</p>
+                    <h2 class="section-title">Shop by Style</h2>
+                    <div class="section-line centered"></div>
+                </div>
+
+                <ul class="nav custom-tabs mb-4" id="shopTabs">
+                    <li class="nav-item"><a class="nav-link active" href="#tab-tshirt" data-bs-toggle="tab">T-Shirts</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-blazers" data-bs-toggle="tab">Blazers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-sunglass" data-bs-toggle="tab">Sunglasses</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-kids" data-bs-toggle="tab">Kids</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab-polo" data-bs-toggle="tab">Polo Shirts</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div class="tab-pane fade show active" id="tab-tshirt">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/tshirt-1.jpg' %}" alt="T-Shirt">
+                                    <div class="price">$56</div>
+                                    <div class="name">Easy Polo Black Edition</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/tshirt-2.jpg' %}" alt="T-Shirt">
+                                    <div class="price">$48</div>
+                                    <div class="name">Classic White Crewneck</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/tshirt-3.jpg' %}" alt="T-Shirt">
+                                    <div class="price">$64</div>
+                                    <div class="name">Premium Stripe Tee</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/tshirt-4.jpg' %}" alt="T-Shirt">
+                                    <div class="price">$72</div>
+                                    <div class="name">Limited Edition Graphic</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-blazers">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/blazer-1.jpg' %}" alt="Blazer">
+                                    <div class="price">$189</div>
+                                    <div class="name">Slim Fit Navy Blazer</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/blazer-2.jpg' %}" alt="Blazer">
+                                    <div class="price">$245</div>
+                                    <div class="name">Classic Black Jacket</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-sunglass">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/sunglasses-1.jpg' %}" alt="Sunglasses">
+                                    <div class="price">$129</div>
+                                    <div class="name">Aviator Polarized</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-kids">
+                        <div class="text-center py-4 text-muted">Kids collection coming soon.</div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-polo">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="tab-product-card">
+                                    <img src="{% static 'images/products/polo-1.jpg' %}" alt="Polo">
+                                    <div class="price">$89</div>
+                                    <div class="name">Classic Polo Navy</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== RECOMMENDED ==================== -->
+<section class="recommended-section">
+    <div class="container">
+        <div class="section-header d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <p class="section-tag">You Might Like</p>
+                <h2 class="section-title">Recommended for You</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="rec-carousel-nav">
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="prev"><i
+                        class="fas fa-chevron-left"></i></button>
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="next"><i
+                        class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="recCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row g-3">
+
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="{% static 'images/products/lenovo-ideapad.jpg' %}" alt="Lenovo IdeaPad">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">Lenovo</div>
+                                    <p class="product-title">IdeaPad Gaming 3 Laptop Ryzen 5 GTX 1650</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$799</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="{% static 'images/products/msi-gf63.jpg' %}" alt="MSI GF63">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">MSI</div>
+                                    <p class="product-title">GF63 Thin Gaming Laptop i5 RTX 3050 8GB</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$949</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 d-none d-md-block">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="{% static 'images/products/asus-rog.jpg' %}" alt="Asus ROG">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">Asus</div>
+                                    <p class="product-title">ROG Zephyrus G14 Ryzen 9 RX 6700S 16GB</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$1,399</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 d-none d-lg-block">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="{% static 'images/products/razer-blade.jpg' %}" alt="Razer Blade">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">Razer</div>
+                                    <p class="product-title">Blade 14 AMD Ryzen 9 RTX 3080 Ti 16GB 1TB</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">$2,999</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== FEATURES STRIP ==================== -->
+<section class="features-strip">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <div>
+                        <h6>Free Shipping</h6>
+                        <p>On all orders over $99</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-undo-alt"></i></div>
+                    <div>
+                        <h6>Easy Returns</h6>
+                        <p>30-day hassle-free returns</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <h6>Secure Payments</h6>
+                        <p>100% protected transactions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <div>
+                        <h6>24/7 Support</h6>
+                        <p>We're always here to help</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

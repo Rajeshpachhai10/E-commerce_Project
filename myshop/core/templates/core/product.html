@@ -1,0 +1,73 @@
+{% load custom_filters %}
+
+{% if product %}
+    {% for i in product %}
+    <div class="col-6 col-md-4 col-lg-3">
+        <div class="product-card">
+            <div class="product-image-area">
+                <div class="product-actions">
+                    <button class="action-btn"><i class="fas fa-heart"></i></button>
+                    <a href="{% url 'product_detail' i.id %}"><button class="action-btn"><i class="fas fa-eye"></i></button></a>
+                    <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                </div>
+                <a href="{% url 'product_detail' i.id %}"><img src="{{i.image.url}}" alt="New Product"></a>
+            </div>
+            <div class="product-body">
+                <div class="brand-tag">{{i.name}}</div>
+                <p class="product-title">{{ i.desc|clean_desc:15 }}</p>
+            </div>
+            <div class="product-footer">
+                <div class="product-price">
+                    Rs.{{ i.price }}
+                    {% if i.mark_price %}
+                    <span class="original">Rs.{{ i.mark_price }}</span>
+                    {% endif %}
+                </div>
+                <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Pagination controls -->
+    <div class="col-12">
+        <div class="pagination-wrap d-flex justify-content-center align-items-center gap-2 mt-4">
+
+            {% if page_obj.has_previous %}
+                <a hx-get="?page={{ page_obj.previous_page_number }}&subcategory={{ request.GET.subcategory }}&min={{ request.GET.min }}&max={{ request.GET.max }}"
+                   hx-target="#product_container" hx-swap="innerHTML" hx-push-url="true"
+                   class="page-btn"><i class="fas fa-chevron-left"></i></a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <span class="page-btn active">{{ num }}</span>
+                {% else %}
+                    <a hx-get="?page={{ num }}&subcategory={{ request.GET.subcategory }}&min={{ request.GET.min }}&max={{ request.GET.max }}"
+                       hx-target="#product_container" hx-swap="innerHTML" hx-push-url="true"
+                       class="page-btn">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a hx-get="?page={{ page_obj.next_page_number }}&subcategory={{ request.GET.subcategory }}&min={{ request.GET.min }}&max={{ request.GET.max }}"
+                   hx-target="#product_container" hx-swap="innerHTML" hx-push-url="true"
+                   class="page-btn"><i class="fas fa-chevron-right"></i></a>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% else %}
+    <div class="col-12">
+        <div class="empty-state text-center py-5">
+            <i class="fas fa-box-open empty-icon"></i>
+            <h3 class="empty-title">Oops! Nothing Here Yet</h3>
+            <p class="empty-text">We couldn't find any products matching your filters.<br>
+                Try widening your price range or exploring a different category.</p>
+            <a hx-get="{% url 'index' %}" hx-push-url="true" hx-target="#product_container" hx-swap="innerHTML" class="btn-primary-custom mt-3">
+                <i class="fas fa-redo me-1"></i> Reset Filters
+            </a>
+        </div>
+    </div>
+{% endif %}
