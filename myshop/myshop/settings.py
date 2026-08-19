@@ -62,24 +62,23 @@ EXTERNAL_APPS = [
 INSTALLED_APPS.extend(EXTERNAL_APPS)
 
 
-import os
+
+
 # Cloudinary setup
-# Load environment variables
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-
 import cloudinary
 cloudinary.config(
-cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
-api_key=os.getenv('CLOUDINARY_API_KEY'),
-api_secret=os.getenv('CLOUDINARY_API_SECRET'),
-secure=True
+    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+    api_key=config('CLOUDINARY_API_KEY'),
+    api_secret=config('CLOUDINARY_API_SECRET'),
+    secure=True
 )
 
 MIDDLEWARE = [

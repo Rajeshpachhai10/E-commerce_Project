@@ -111,12 +111,22 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
+                                
+                                {% if user.is_authenticated %}
                                 <li><a class="dropdown-item" href="{% url 'login' %}"><i
+                                            class="fas fa-sign-in-alt me-2 text-muted"
+                                            style="font-size:11px"></i>Logout</a></li>
+
+                                
+                                {% else %}
+                                 <li><a class="dropdown-item" href="{% url 'logout' %}"><i
                                             class="fas fa-sign-in-alt me-2 text-muted"
                                             style="font-size:11px"></i>Login</a></li>
                                 <li><a class="dropdown-item" href="{% url 'register' %}"><i
                                             class="fas fa-sign-in-alt me-2 text-muted"
                                             style="font-size:11px"></i>Register</a></li>
+
+                                {% endif %}
                             </ul>
                         </div>
                         <a href="#" class="icon-btn position-relative">
