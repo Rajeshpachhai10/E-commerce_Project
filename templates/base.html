@@ -99,7 +99,17 @@
                     <div class="d-flex align-items-center gap-1">
                         <div class="dropdown">
                             <a href="#" class="icon-btn" data-bs-toggle="dropdown">
+                                {% if user.is_authenticated %}
+                                {% if request.user.profile.profile_picture %}
+                                <img src="{{ request.user.profile.profile_picture.url }}" alt="Profile"
+                                    style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; display: block;">
+                                {% else %}
+                                <img src="{% static 'images/avtar.jpg' %}" alt="Profile"
+                                    style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; display: block;">
+                                {% endif %}
+                                {% else %}
                                 <i class="fas fa-user"></i>
+                                {% endif %}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
 

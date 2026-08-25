@@ -1,8 +1,9 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from django.core.paginator import Paginator
-from django.db.models import Count, Prefetch, Q
+from django.db.models import Count, Prefetch, Q, Avg
 from django.views.decorators.cache import never_cache
 from .models import *
+from .forms import *
 
 
 
@@ -43,7 +44,31 @@ def index(request):
 
 def product_detail(request,id):
     product=get_object_or_404(Product,id=id)
+    reviews=product.reviews.all()
+    existing=Review.objects.filter(user=request.user,product=product).first()
+    form=ReviewForm()
+    if request.method == 'POST':
+        form=ReviewForm(request.POST)
+        if form.is_valid():
+            review=form.save(commit=False)
+            review.user=request.user
+            review.product=product
+            review.save()
+            return redirect('product_detail',id=product.id)
+
+    # average rating + total count in one query instead of two
+    rating_stats = reviews.aggregate(avg_rating=Avg('rating'), total_reviews=Count('id'))
+    avg_rating = round(rating_stats['avg_rating'] or 0)  
+    total_reviews = rating_stats['total_reviews']
+
     context={
-        "product":product
+        "product":product,
+        "form":form,
+        "reviews":reviews,
+        "range":range(1,6),
+        "existing":existing,
+        "avg_rating":avg_rating,
+        "total_reviews":total_reviews,
     }
+
     return render(request,"core/product_detail.html", context)
