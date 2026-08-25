@@ -399,28 +399,29 @@
 </section>
 
 
-<!-- ==================== RECOMMENDED ==================== -->
+<!-- ==================== TOP RATED ==================== -->
 <section class="recommended-section">
     <div class="container">
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
-                <p class="section-tag">You Might Like</p>
-                <h2 class="section-title">Recommended for You</h2>
+                <p class="section-tag">Customer Favorites</p>
+                <h2 class="section-title">Top Rated Products</h2>
                 <div class="section-line"></div>
             </div>
             <div class="rec-carousel-nav">
-                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="prev"><i
+                <button class="rec-nav-btn" data-bs-target="#topRatedCarousel" data-bs-slide="prev"><i
                         class="fas fa-chevron-left"></i></button>
-                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="next"><i
+                <button class="rec-nav-btn" data-bs-target="#topRatedCarousel" data-bs-slide="next"><i
                         class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 
-        <div id="recCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="topRatedCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row g-3">
 
+                        {% for i in top_rated %}
                         <div class="col-6 col-md-4 col-lg-3">
                             <div class="product-card">
                                 <div class="product-image-area">
@@ -428,75 +429,20 @@
                                         <button class="action-btn"><i class="fas fa-heart"></i></button>
                                         <button class="action-btn"><i class="fas fa-eye"></i></button>
                                     </div>
-                                    <img src="{% static 'images/products/lenovo-ideapad.jpg' %}" alt="Lenovo IdeaPad">
+                                    <img src="{{ i.image.url }}" alt="{{ i.name }}">
                                 </div>
                                 <div class="product-body">
-                                    <div class="brand-tag">Lenovo</div>
-                                    <p class="product-title">IdeaPad Gaming 3 Laptop Ryzen 5 GTX 1650</p>
+                                    <div class="brand-tag">{{ i.name }}</div>
+                                    <p class="product-title">{{ i.desc|clean_desc }}</p>
                                 </div>
                                 <div class="product-footer">
-                                    <div class="product-price">$799</div>
+                                    <div class="product-price">Rs.{{ i.price }}</div>
                                     <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <div class="product-card">
-                                <div class="product-image-area">
-                                    <div class="product-actions">
-                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    </div>
-                                    <img src="{% static 'images/products/msi-gf63.jpg' %}" alt="MSI GF63">
-                                </div>
-                                <div class="product-body">
-                                    <div class="brand-tag">MSI</div>
-                                    <p class="product-title">GF63 Thin Gaming Laptop i5 RTX 3050 8GB</p>
-                                </div>
-                                <div class="product-footer">
-                                    <div class="product-price">$949</div>
-                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-3 d-none d-md-block">
-                            <div class="product-card">
-                                <div class="product-image-area">
-                                    <div class="product-actions">
-                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    </div>
-                                    <img src="{% static 'images/products/asus-rog.jpg' %}" alt="Asus ROG">
-                                </div>
-                                <div class="product-body">
-                                    <div class="brand-tag">Asus</div>
-                                    <p class="product-title">ROG Zephyrus G14 Ryzen 9 RX 6700S 16GB</p>
-                                </div>
-                                <div class="product-footer">
-                                    <div class="product-price">$1,399</div>
-                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-4 col-lg-3 d-none d-lg-block">
-                            <div class="product-card">
-                                <div class="product-image-area">
-                                    <div class="product-actions">
-                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
-                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
-                                    </div>
-                                    <img src="{% static 'images/products/razer-blade.jpg' %}" alt="Razer Blade">
-                                </div>
-                                <div class="product-body">
-                                    <div class="brand-tag">Razer</div>
-                                    <p class="product-title">Blade 14 AMD Ryzen 9 RTX 3080 Ti 16GB 1TB</p>
-                                </div>
-                                <div class="product-footer">
-                                    <div class="product-price">$2,999</div>
-                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
+
                     </div>
                 </div>
             </div>

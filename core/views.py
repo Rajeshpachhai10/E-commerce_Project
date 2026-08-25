@@ -31,44 +31,56 @@ def index(request):
     page_number = request.GET.get("page", 1)
     page_obj = paginator.get_page(page_number)
 
+    # Top rated: only products with at least one review, so unreviewed
+    # products (avg_rating=None) don't sort to the top.
+    top_rated = Product.objects.annotate(avg_rating=Avg("reviews__rating")) \
+        .filter(avg_rating__isnull=False) \
+        .order_by("-avg_rating")[:3]
+
     context = {
         "offer": offer,
         "category": category,
-        "product": page_obj,   # now a Page object, still loops like a normal queryset
-        "page_obj": page_obj,  # gives access to has_next, has_previous, etc.
+        "product": page_obj,
+        "page_obj": page_obj,
+        "top_rated": top_rated,
     }
     if request.headers.get("HX-Request"):
         return render(request, "core/product.html", context)
     return render(request, "core/index.html", context)
 
-
-def product_detail(request,id):
-    product=get_object_or_404(Product,id=id)
-    reviews=product.reviews.all()
-    existing=Review.objects.filter(user=request.user,product=product).first()
-    form=ReviewForm()
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    reviews = product.reviews.all()
+    existing = Review.objects.filter(user=request.user, product=product).first()
+    form = ReviewForm()
     if request.method == 'POST':
-        form=ReviewForm(request.POST)
+        form = ReviewForm(request.POST)
         if form.is_valid():
-            review=form.save(commit=False)
-            review.user=request.user
-            review.product=product
+            review = form.save(commit=False)
+            review.user = request.user
+            review.product = product
             review.save()
-            return redirect('product_detail',id=product.id)
+            return redirect('product_detail', id=product.id)
 
     # average rating + total count in one query instead of two
     rating_stats = reviews.aggregate(avg_rating=Avg('rating'), total_reviews=Count('id'))
-    avg_rating = round(rating_stats['avg_rating'] or 0)  
+    avg_rating = round(rating_stats['avg_rating'] or 0)
     total_reviews = rating_stats['total_reviews']
 
-    context={
-        "product":product,
-        "form":form,
-        "reviews":reviews,
-        "range":range(1,6),
-        "existing":existing,
-        "avg_rating":avg_rating,
-        "total_reviews":total_reviews,
+    related_product = Product.objects.filter(category=product.category).exclude(id=product.id)
+
+    
+   
+    context = {
+        "product": product,
+        "form": form,
+        "reviews": reviews,
+        "range": range(1, 6),
+        "existing": existing,
+        "avg_rating": avg_rating,
+        "total_reviews": total_reviews,
+        "related_product": related_product,
+        
     }
 
-    return render(request,"core/product_detail.html", context)
+    return render(request, "core/product_detail.html", context)

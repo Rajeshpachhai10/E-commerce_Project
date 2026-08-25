@@ -37,6 +37,30 @@
     .star-input label:hover~label {
         color: #f5a623;
     }
+
+    .review-hidden {
+        display: none;
+    }
+
+    .btn-view-all {
+        display: inline-block;
+        margin-top: 8px;
+        margin-bottom: 20px;
+        background: #fff;
+        color: #3B6FA0;
+        border: 1.5px solid #3B6FA0;
+        border-radius: 20px;
+        padding: 6px 18px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-view-all:hover {
+        background: #3B6FA0;
+        color: #fff;
+    }
 </style>
 
 
@@ -150,13 +174,19 @@
 
                 <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                     <div class="review-heading">REVIEWS</div>
-                    <div class="reviews-list">
+                    <div class="reviews-list" id="reviewsList">
                         {% for review in reviews %}
-                        <div class="review-card">
+                        <div class="review-card {% if forloop.counter > 2 %}review-hidden{% endif %}">
                             <div class="review-header">
+                                {% if review.user.profile.profile_picture %}
+                                <div class="reviewer-avatar" style="background:#3B6FA0"><img
+                                        src="{{review.user.profile.profile_picture.url}}"
+                                        alt="{{ review.user.username }}"></div>
+                                {% else %}
                                 <div class="reviewer-avatar" style="background:#3B6FA0">
                                     {{ review.user.username|first|upper }}
                                 </div>
+                                {% endif %}
                                 <div class="reviewer-info">
                                     <div class="reviewer-name">{{ review.user.username }}</div>
                                     <div class="review-date">{{ review.created_at }}</div>
@@ -173,6 +203,12 @@
                         </div>
                         {% endfor %}
                     </div>
+
+                    {% if total_reviews > 2 %}
+                    <button type="button" id="viewAllBtn" class="btn-view-all" onclick="showAllReviews()">
+                        View All Reviews ({{ total_reviews }})
+                    </button>
+                    {% endif %}
 
                     {% if user.is_authenticated %}
                     {% if existing %}
@@ -215,10 +251,71 @@
 
     </div>
 </div>
+<!-- ==================== RECOMMENDED ==================== -->
+{% load custom_filters %}
+<section class="recommended-section">
+    <div class="container">
+        <div class="section-header d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <p class="section-tag">You Might Like</p>
+                <h2 class="section-title">Recommended for You</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="rec-carousel-nav">
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="prev"><i
+                        class="fas fa-chevron-left"></i></button>
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="next"><i
+                        class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="recCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row g-3">
+
+                        {% for i in related_product %}
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="{{ i.image.url }}" alt="{{ i.name }}">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">{{ i.name }}</div>
+                                    <p class="product-title">{{ i.desc|clean_desc }}</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">Rs.{{ i.price }}</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showAllReviews() {
+        document.querySelectorAll('.review-hidden').forEach(function (card) {
+            card.style.display = 'block';
+        });
+        document.getElementById('viewAllBtn').style.display = 'none';
+    }
+</script>
 
 <script src="{% static 'js/product_detail.js' %}"></script>
 {% endblock content %}
