@@ -32,6 +32,9 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
+
+from decouple import config
+
 # Esewa Secret key
 ESEWA_SECRET_KEY = config('ESEWA_SECRET_KEY')
 ESEWA_PRODUCT_CODE = config('ESEWA_PRODUCT_CODE')
@@ -57,6 +60,8 @@ EXTERNAL_APPS = [
     "core",
     "accounts",
     'django_ckeditor_5',
+    'cart',
+    'payments',
 ]
 
 INSTALLED_APPS.extend(EXTERNAL_APPS)
@@ -103,10 +108,13 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'cart.context_processor.cart_total_amount'
             ],
         },
     },
 ]
+
+CART_SESSION_ID = 'cart'
 
 WSGI_APPLICATION = "myshop.wsgi.application"
 AUTH_USER_MODEL = "accounts.CustomUser"

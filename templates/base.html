@@ -140,9 +140,9 @@
                                 {% endif %}
                             </ul>
                         </div>
-                        <a href="#" class="icon-btn position-relative">
+                        <a href="{% url 'cart_detail' %}" class="icon-btn position-relative">
                             <i class="fas fa-shopping-bag"></i>
-                            <span class="cart-badge">3</span>
+                            <span class="cart-badge">{{request.session.cart|length}}</span>
                         </a>
                         <a href="#" class="icon-btn">
                             <i class="fas fa-heart"></i>

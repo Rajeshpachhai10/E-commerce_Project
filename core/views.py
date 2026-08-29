@@ -1,10 +1,11 @@
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch, Q, Avg
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
+from cart.cart import Cart
 from .models import *
 from .forms import *
-
 
 
 @never_cache
@@ -48,6 +49,7 @@ def index(request):
         return render(request, "core/product.html", context)
     return render(request, "core/index.html", context)
 
+
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     reviews = product.reviews.all()
@@ -69,8 +71,6 @@ def product_detail(request, id):
 
     related_product = Product.objects.filter(category=product.category).exclude(id=product.id)
 
-    
-   
     context = {
         "product": product,
         "form": form,
@@ -80,7 +80,71 @@ def product_detail(request, id):
         "avg_rating": avg_rating,
         "total_reviews": total_reviews,
         "related_product": related_product,
-        
     }
 
     return render(request, "core/product_detail.html", context)
+
+
+'''
+===========================================================================================================
+                       Add To Cart
+===========================================================================================================
+'''
+
+
+@login_required(login_url="login")
+def cart_add(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("index")
+
+
+@login_required(login_url="login")
+def item_clear(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.remove(product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="login")
+def item_increment(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="login")
+def item_decrement(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.decrement(product=product)
+    return redirect("cart_detail")
+
+
+@login_required(login_url="login")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart_detail")
+
+
+@login_required(login_url="login")
+def cart_detail(request):
+    cart = request.session.get('cart') or {}
+    subtotal = 0
+    for item in cart.values():
+        subtotal += item['quantity'] * float(item['price'])
+
+    tax = round(subtotal * 0.13, 2)
+    total = round(subtotal + tax, 2)
+
+    context = {
+        "amount": f"{subtotal:.2f}",
+        "tax_amount": f"{tax:.2f}",
+        "total_amount": f"{total:.2f}",
+    }
+
+    return render(request, 'core/cart.html', context)
