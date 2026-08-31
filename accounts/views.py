@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm , ProfileForm
 from .models import *
+from payments.models import Order
 
 # Create your views here.
 
@@ -102,6 +103,14 @@ def profile(request):
     return render(request, "profile/profile.html", context)
 
 
-
-
+@login_required(login_url="login")
+def my_order(request):
+    orders = (
+        Order.objects
+        .filter(transaction__user=request.user)
+        .select_related('transaction')
+        .prefetch_related('items')
+        .order_by('-transaction__created_at')
+    )
+    return render(request, "profile/my_order.html", {"orders": orders})
         

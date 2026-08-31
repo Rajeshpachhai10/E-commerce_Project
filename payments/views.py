@@ -1,13 +1,14 @@
 import base64
 import json
 import logging
+from decimal import Decimal, InvalidOperation
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Transaction
+from .models import Order, OrderItem, Transaction
 from .utils import generate_signature, verify_signature
 
 logger = logging.getLogger(__name__)
@@ -81,8 +82,35 @@ def esewa_success(request):
         user=request.user,
     )
 
+    # Guard against the URL being bookmarked, refreshed, or copy-pasted:
+    # if this transaction was already settled, just show that result again
+    # instead of re-running the checks and re-clearing the (now possibly
+    # different) cart.
+    if txn.status == Transaction.STATUS_COMPLETE:
+        return render(request, "payments/success_esewa.html", {"transaction": txn})
+    if txn.status == Transaction.STATUS_FAILED:
+        return render(
+            request,
+            "failure_esewa.html",
+            {"reason": "This payment was already marked as failed."},
+        )
+
     # The amount eSewa confirms must match what we originally charged for.
-    if str(txn.total_amount) != str(payload.get("total_amount")):
+    # Compare as Decimal, not raw strings — "1623.6" and "1623.60" are the
+    # same amount but wouldn't match with a plain string comparison.
+    try:
+        received_amount = Decimal(str(payload.get("total_amount")))
+    except (InvalidOperation, TypeError):
+        logger.warning("Non-numeric total_amount on transaction %s", txn.transaction_uuid)
+        txn.status = Transaction.STATUS_FAILED
+        txn.save(update_fields=["status", "updated_at"])
+        return render(
+            request,
+            "failure_esewa.html",
+            {"reason": "Invalid amount received — payment not accepted."},
+        )
+
+    if txn.total_amount != received_amount:
         logger.warning("Amount mismatch on transaction %s", txn.transaction_uuid)
         txn.status = Transaction.STATUS_FAILED
         txn.save(update_fields=["status", "updated_at"])
@@ -105,14 +133,35 @@ def esewa_success(request):
     txn.transaction_code = payload.get("transaction_code", "")
     txn.save(update_fields=["status", "transaction_code", "updated_at"])
 
-    # TODO: create the actual Order record here from the cart, if you
-    # haven't already, now that payment is confirmed.
-    request.session["cart"] = {}
+    # get_or_create keyed on `transaction` (a OneToOneField) means: if an
+    # Order for this transaction already exists, just fetch it — don't
+    # build a second one. `created` tells us whether this is the first
+    # time we've reached this point for this payment.
+    order, created = Order.objects.get_or_create(
+        transaction=txn,
+        defaults={
+            "user": request.user,
+            "total_amount": txn.total_amount,
+        },
+    )
+
+    if created:
+        cart = request.session.get("cart") or {}
+        for item in cart.values():
+            OrderItem.objects.create(
+                order=order,
+                product_id=item["product_id"],
+                name=item["name"],
+                price=item["price"],
+                quantity=item["quantity"],
+                image=item.get("image", ""),
+            )
+        request.session["cart"] = {}
 
     return render(
         request,
         "success_esewa.html",
-        {"transaction": txn},
+        {"transaction": txn, "order": order},
     )
 
 
@@ -122,7 +171,9 @@ def esewa_failure(request):
     if txn_uuid:
         Transaction.objects.filter(
             transaction_uuid=txn_uuid, user=request.user
-        ).update(status=Transaction.STATUS_FAILED)
+        ).exclude(status=Transaction.STATUS_COMPLETE).update(
+            status=Transaction.STATUS_FAILED
+        )
 
     return render(
         request,

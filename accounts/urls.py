@@ -26,5 +26,6 @@ urlpatterns = [
      # Profile management
      path('profile_dashboard/',views.profile_dashboard,name='profile_dashboard'),
      path('profile/',views.profile,name='profile'),
+     path('my_order/', views.my_order, name='my_order'),
 
 ]
