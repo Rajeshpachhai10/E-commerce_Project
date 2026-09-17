@@ -74,13 +74,10 @@ JAZZMIN_SETTINGS = {
     "site_brand": "MyShop",
     "welcome_sign": "Welcome to the MyShop Admin Panel",
     "copyright": "MyShop",
-
-    "show_ui_builder": True,   # adds a live theme-customizer button to the admin — great while you're still designing it, turn off before you ship
-
-    # sidebar/topmenu
+    "show_ui_builder": True,
     "navigation_expanded": True,
-    "changeform_format": "horizontal_tabs",   # controls the "form_format" you asked about — how add/edit forms lay out fieldsets
-}
+    "changeform_format": "horizontal_tabs",
+} 
 
 
 

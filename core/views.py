@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch, Q, Avg
 from django.views.decorators.cache import never_cache
@@ -6,6 +7,23 @@ from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
 from .models import *
 from .forms import *
+
+
+
+def about(request):
+    return render(request, 'core/about.html')
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message_text = request.POST.get('message')
+
+        ContactMessage.objects.create(name=name, email=email, message=message_text)
+        messages.success(request, "Thanks! Your message has been sent.")
+        return redirect('contact')
+
+    return render(request, 'core/contact.html')
 
 
 @never_cache

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section-py">
+    <div class="container">
+        <div class="section-header text-center mb-4">
+            <p class="section-tag">Get In Touch</p>
+            <h2 class="section-title">Contact Us</h2>
+            <div class="section-line centered"></div>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success text-center" style="max-width:500px;margin:0 auto 20px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" style="max-width:500px;margin:0 auto;">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Message</label>
+                <textarea name="message" class="form-control" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary-custom">Send Message</button>
+        </form>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- ==================== ABOUT HERO ==================== -->
+<section class="hero-section">
+    <div class="hero-slide slide-1">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center animate-up">
+                    <span class="hero-label">Since 2025</span>
+                    <h1>Built by Shoppers,<br>For Shoppers</h1>
+                    <p>Myshop started as a simple idea — make premium electronics and fashion easy to
+                        find, easy to trust, and easy to afford. Here's a bit about who we are.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== OUR STORY ==================== -->
+<section class="section-py">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <img src="{% static 'images/promo/flash-sale.jpg' %}" alt="Our story"
+                    style="width:100%;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.15);">
+            </div>
+            <div class="col-lg-6">
+                <p class="section-tag">Our Story</p>
+                <h2 class="section-title">From an Idea to Your Doorstep</h2>
+                <div class="section-line"></div>
+                <p style="color:var(--ink-muted);line-height:1.8;margin-top:16px;">
+                    We got tired of choosing between "cheap and unreliable" or "good but overpriced."
+                    So we built Myshop around one rule: curate what we'd actually want to buy ourselves,
+                    then price it honestly.
+                </p>
+                <p style="color:var(--ink-muted);line-height:1.8;">
+                    Every product on this site — from laptops to everyday fashion — is picked with that
+                    same standard. No filler, no gimmicks.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== STATS ==================== -->
+<section class="promo-banner">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <h2 style="color:var(--accent);font-family:'Playfair Display',serif;">50+</h2>
+                <p style="color:rgba(255,255,255,0.7);">Brands Curated</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 style="color:var(--accent);font-family:'Playfair Display',serif;">10k+</h2>
+                <p style="color:rgba(255,255,255,0.7);">Happy Customers</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 style="color:var(--accent);font-family:'Playfair Display',serif;">1200+</h2>
+                <p style="color:rgba(255,255,255,0.7);">Products Listed</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 style="color:var(--accent);font-family:'Playfair Display',serif;">24/7</h2>
+                <p style="color:rgba(255,255,255,0.7);">Support Available</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== WHY SHOP WITH US ==================== -->
+<section class="section-py">
+    <div class="container">
+        <div class="section-header text-center mb-4">
+            <p class="section-tag">Why Myshop</p>
+            <h2 class="section-title">What Sets Us Apart</h2>
+            <div class="section-line centered"></div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-gem"></i></div>
+                    <div>
+                        <h6>Curated Quality</h6>
+                        <p>Every item is hand-picked, not just listed.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <div>
+                        <h6>Honest Pricing</h6>
+                        <p>No inflated "discounts" — fair prices year-round.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <div>
+                        <h6>Fast Delivery</h6>
+                        <p>Quick, tracked shipping across Nepal.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <div>
+                        <h6>Real Support</h6>
+                        <p>Actual humans, ready to help anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== CTA ==================== -->
+<section class="category-tabs">
+    <div class="container text-center">
+        <p class="section-tag">Have Questions?</p>
+        <h2 class="section-title">We'd Love to Hear From You</h2>
+        <div class="section-line centered"></div>
+        <a href="{% url 'contact' %}" class="btn-primary-custom mt-3">
+            Contact Us <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+{% endblock content %}

@@ -13,5 +13,8 @@ urlpatterns = [
          item_decrement, name='item_decrement'),
     path('cart/cart_clear/', cart_clear, name='cart_clear'),
     path('cart/cart-detail/', cart_detail,name='cart_detail'),  
+    # -------------Nav section-----------------------
+    path('about/', about, name='about'),
+    path('contact/', contact, name='contact'),
     
 ]
