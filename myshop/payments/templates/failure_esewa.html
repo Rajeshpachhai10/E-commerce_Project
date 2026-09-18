@@ -1,0 +1,89 @@
+
+<style>
+  .payment-result-wrap {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: #faf8f4;
+  }
+  .payment-card {
+    max-width: 480px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(20, 20, 20, 0.08);
+    padding: 48px 40px;
+    text-align: center;
+    border-top: 4px solid #b3413a;
+    animation: cardRise 0.5s ease-out;
+  }
+  @keyframes cardRise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .status-icon-failed {
+    width: 84px; height: 84px; margin: 0 auto 20px;
+    border-radius: 50%; background: #fbecea;
+    display: flex; align-items: center; justify-content: center;
+    animation: shake 0.5s ease-out 0.15s both;
+  }
+  @keyframes shake {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.05) rotate(-4deg); }
+    75% { transform: scale(1) rotate(3deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+  .status-icon-failed svg { width: 40px; height: 40px; }
+  .status-icon-failed circle { stroke: #b3413a; }
+  .status-icon-failed line { stroke: #b3413a; stroke-linecap: round; }
+  .payment-card h2 {
+    font-family: 'Playfair Display', serif; font-size: 28px; color: #1a1a1a; margin-bottom: 8px;
+  }
+  .payment-card .subtext {
+    font-family: 'DM Sans', sans-serif; color: #6b6b6b; font-size: 15px; margin-bottom: 24px;
+  }
+  .payment-reason {
+    background: #fbecea; border-radius: 10px; padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: #8a3a34; margin-bottom: 28px;
+  }
+  .payment-actions a {
+    display: inline-block; font-family: 'DM Sans', sans-serif; font-weight: 600;
+    font-size: 14px; padding: 13px 30px; border-radius: 8px; text-decoration: none;
+    margin: 6px; transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary-gold { background: #c9a227; color: #fff; }
+  .btn-primary-gold:hover {
+    transform: translateY(-2px); box-shadow: 0 6px 16px rgba(201, 162, 39, 0.35); color: #fff;
+  }
+  .btn-outline-ink { border: 1px solid #d8d3c8; color: #444; background: transparent; }
+  .btn-outline-ink:hover { border-color: #c9a227; color: #c9a227; }
+</style>
+
+<div class="payment-result-wrap">
+  <div class="payment-card">
+
+    <div class="status-icon-failed">
+      <svg viewBox="0 0 52 52" fill="none">
+        <circle cx="26" cy="26" r="24" stroke-width="3"/>
+        <line x1="18" y1="18" x2="34" y2="34" stroke-width="3.5"/>
+        <line x1="34" y1="18" x2="18" y2="34" stroke-width="3.5"/>
+      </svg>
+    </div>
+
+    <h2>Payment Failed</h2>
+    <p class="subtext">Don't worry — your cart is safe and nothing has been charged.</p>
+
+    <div class="payment-reason">
+      {{ reason }}
+    </div>
+
+    <div class="payment-actions">
+      <a href="{% url 'cart_detail' %}" class="btn-primary-gold">Back to Cart</a>
+      <a href="{% url 'index' %}" class="btn-outline-ink">Continue Shopping</a>
+    </div>
+
+  </div>
+</div>
+

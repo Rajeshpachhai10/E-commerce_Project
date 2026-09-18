@@ -2,23 +2,66 @@
 {% load custom_filters %}
 {% load static %}
 {% block content %}
+
+<!-- One Bootstrap version only (5.3), one Font Awesome version only -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!--Important link from https://bootsnipp.com/snippets/XqvZr-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-
 <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+
+<style>
+    /* Clickable star rating for the review form: reversed order + CSS so hovering
+       fills stars left-to-right even though the HTML lists 5 down to 1 */
+    .star-input {
+        display: inline-flex;
+        flex-direction: row-reverse;
+        font-size: 1.4rem;
+    }
+
+    .star-input input {
+        display: none;
+    }
+
+    .star-input label {
+        color: #ccc;
+        cursor: pointer;
+        padding: 0 2px;
+    }
+
+    .star-input input:checked~label,
+    .star-input label:hover,
+    .star-input label:hover~label {
+        color: #f5a623;
+    }
+
+    .review-hidden {
+        display: none;
+    }
+
+    .btn-view-all {
+        display: inline-block;
+        margin-top: 8px;
+        margin-bottom: 20px;
+        background: #fff;
+        color: #3B6FA0;
+        border: 1.5px solid #3B6FA0;
+        border-radius: 20px;
+        padding: 6px 18px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-view-all:hover {
+        background: #3B6FA0;
+        color: #fff;
+    }
+</style>
 
 
 <div class="pd-wrap">
@@ -30,57 +73,49 @@
             <div class="col-md-6">
                 <!-- Main slider -->
                 <div id="slider" class="owl-carousel product-slider">
-                    {% for i in product.images.all  %}
-                      
-                    
-
+                    {% for i in product.images.all %}
                     <div class="item">
-                        <img src="{{i.image.url}}" alt="Product image">
+                        <img src="{{ i.image.url }}" alt="Product image">
                     </div>
                     {% endfor %}
-                    
-
                 </div>
 
                 <!-- Thumbnail slider -->
                 <div id="thumb" class="owl-carousel product-thumb">
-                    {% for i in product.images.all  %}
-
+                    {% for i in product.images.all %}
                     <div class="item">
-                        <img src="{{i.image.url}}" alt="Product image">
+                        <img src="{{ i.image.url }}" alt="Product image">
                     </div>
-
                     {% endfor %}
-                   
-
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="product-dtl">
                     <div class="product-info">
-                        <div class="product-name">{{product.name}}</div>
+                        <div class="product-name">{{ product.name }}</div>
+
+                        <!-- Same star-icon pattern as the review cards below, driven by the actual average rating -->
                         <div class="reviews-counter">
                             <div class="rate">
-                                <input type="radio" id="star5" name="rate" value="5" checked />
-                                <label for="star5" title="text">5 stars</label>
-                                <input type="radio" id="star4" name="rate" value="4" checked />
-                                <label for="star4" title="text">4 stars</label>
-                                <input type="radio" id="star3" name="rate" value="3" checked />
-                                <label for="star3" title="text">3 stars</label>
-                                <input type="radio" id="star2" name="rate" value="2" />
-                                <label for="star2" title="text">2 stars</label>
-                                <input type="radio" id="star1" name="rate" value="1" />
-                                <label for="star1" title="text">1 star</label>
+                                {% for i in range %}
+                                <i
+                                    class="fa-star {% if avg_rating >= i %}fa-solid{% else %}fa-regular{% endif %} text-warning"></i>
+                                {% endfor %}
                             </div>
-                            <span>3 Reviews</span>
+                            <span>{{ total_reviews }} Review{{ total_reviews|pluralize }}</span>
                         </div>
-                        <div class="product-price-discount"><span>Rs.{{product.price}}</span><span
-                                class="line-through">Rs.{{product.mark_price}}</span>
+
+                        <div class="product-price-discount">
+                            <span>Rs.{{ product.price }}</span>
+                            <span class="line-through">Rs.{{ product.mark_price }}</span>
                         </div>
                     </div>
-                    <!-- FIXED: added |linebreaks so plain-text paragraphs render correctly -->
+
+                    <!-- desc is stored as HTML from the rich-text editor in admin, so |safe is correct here
+                         (|linebreaks was tried before and double-wrapped the HTML in extra <p> tags) -->
                     {{ product.desc|safe }}
+
                     <div class="row">
                         <div class="col-md-6">
                             <label for="size">Size</label>
@@ -100,9 +135,11 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="product-count">
                         <label for="size">Quantity</label>
-                        <form action="#" class="display-flex">
+                        <form action="#" method="post" class="display-flex">
+                            {% csrf_token %}
                             <div class="qtyminus">-</div>
                             <input type="text" name="quantity" value="1" class="qty">
                             <div class="qtyplus">+</div>
@@ -112,15 +149,16 @@
                 </div>
             </div>
         </div>
+
         <div class="product-info-tabs">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab"
+                    <a class="nav-link active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab"
                         aria-controls="description" aria-selected="true">Description</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab"
-                        aria-controls="review" aria-selected="false">Reviews (0)</a>
+                    <a class="nav-link" id="review-tab" data-bs-toggle="tab" href="#review" role="tab"
+                        aria-controls="review" aria-selected="false">Reviews ({{ total_reviews }})</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -133,120 +171,151 @@
                     culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus
                     error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
                 </div>
+
                 <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                     <div class="review-heading">REVIEWS</div>
-                    <div class="reviews-list">
-                        <!-- Review 1 -->
-                        <div class="review-card">
+                    <div class="reviews-list" id="reviewsList">
+                        {% for review in reviews %}
+                        <div class="review-card {% if forloop.counter > 2 %}review-hidden{% endif %}">
                             <div class="review-header">
-                                <div class="reviewer-avatar" style="background:#3B6FA0">MR</div>
+                                {% if review.user.profile.profile_picture %}
+                                <div class="reviewer-avatar" style="background:#3B6FA0"><img
+                                        src="{{review.user.profile.profile_picture.url}}"
+                                        alt="{{ review.user.username }}"></div>
+                                {% else %}
+                                <div class="reviewer-avatar" style="background:#3B6FA0">
+                                    {{ review.user.username|first|upper }}
+                                </div>
+                                {% endif %}
                                 <div class="reviewer-info">
-                                    <div class="reviewer-name">Marcus R.</div>
-                                    <div class="review-date">March 12, 2026 · Verified Purchase</div>
+                                    <div class="reviewer-name">{{ review.user.username }}</div>
+                                    <div class="review-date">{{ review.created_at }}</div>
                                 </div>
                             </div>
                             <div class="review-stars">
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
+                                {% for i in range %}
+                                <i
+                                    class="fa-star {% if review.rating >= i %}fa-solid{% else %}fa-regular{% endif %} text-warning"></i>
+                                {% endfor %}
                             </div>
-                            <p class="review-body">Replaced my MacBook Pro with this and have zero regrets. The OLED
-                                display is simply stunning for photo editing — colours are dead accurate. Battery life
-                                is solid at around 9–10 hours of real use.</p>
+                            <p class="review-body">{{ review.feedback }}</p>
                             <span class="review-tag" style="background:#F0FBF4;color:#2E7D52">Recommended</span>
                         </div>
-
-                        <!-- Review 2 -->
-                        <div class="review-card">
-                            <div class="review-header">
-                                <div class="reviewer-avatar" style="background:#C9572A">SP</div>
-                                <div class="reviewer-info">
-                                    <div class="reviewer-name">Sara P.</div>
-                                    <div class="review-date">February 28, 2026 · Verified Purchase</div>
-                                </div>
-                            </div>
-                            <div class="review-stars">
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#D4A853" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                                <svg viewBox="0 0 20 20" fill="#E8E4DF" width="14" height="14">
-                                    <path d="M10 1l2.4 6.6H19l-5.4 4 2 6.4L10 14l-5.6 4 2-6.4L1 7.6h6.6z" />
-                                </svg>
-                            </div>
-                            <p class="review-body">Great machine overall. Rendering times in Blender are impressively
-                                fast for a laptop this thin. The fan can get loud under heavy GPU load — that's my only
-                                complaint. Build quality feels premium.</p>
-                            <span class="review-tag" style="background:#FFF8F0;color:#A0522D">Good</span>
-                        </div>
+                        {% endfor %}
                     </div>
-                    <form class="review-form">
-                        <div class="form-group">
-                            <label>Your rating</label>
-                            <div class="reviews-counter">
-                                <div class="rate" id="star-container">
-                                    {% for i in "12345" %}
-                                    <i class="fa fa-star star" data-value="{{ i }}"></i>
-                                    {% endfor %}
-                                </div>
+
+                    {% if total_reviews > 2 %}
+                    <button type="button" id="viewAllBtn" class="btn-view-all" onclick="showAllReviews()">
+                        View All Reviews ({{ total_reviews }})
+                    </button>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    {% if existing %}
+                    <div class="d-inline-flex align-items-center gap-2 fw-bold px-3 py-2"
+                        style="background: #f0fdf4; color: #15803d; border-radius: 30px; border: 1px solid #86efac; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Already reviewed this product</span>
+                    </div>
+                    {% else %}
+                    <form action="" method="post" class="review-form mt-3">
+                        {% csrf_token %}
+                        <div class="mb-2">
+                            <label>Rating</label>
+                            <div class="star-input">
+                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5"><i
+                                        class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label for="star4"><i
+                                        class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3"><i
+                                        class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2"><i
+                                        class="fa-solid fa-star"></i></label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1"><i
+                                        class="fa-solid fa-star"></i></label>
                             </div>
-                            <input type="hidden" name="rating" id="rating-value" required>
                         </div>
-                        <div class="form-group">
-                            <label>Your message</label>
-                            <textarea class="form-control" rows="10"></textarea>
+                        <div class="mb-2">
+                            <label for="feedback">Your review</label>
+                            <textarea id="feedback" name="feedback" class="form-control" rows="3"></textarea>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="" class="form-control" placeholder="Name*">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" name="" class="form-control" placeholder="Email Id*">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="round-black-btn">Submit Review</button>
+                        <button type="submit" class="round-black-btn">Submit Review</button>
                     </form>
+                    {% endif %}
+                    {% else %}
+                    <p class="alert alert-info text-center" style="font-weight: bold;">Login First to Review</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
-
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="	sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+<!-- ==================== RECOMMENDED ==================== -->
+{% load custom_filters %}
+<section class="recommended-section">
+    <div class="container">
+        <div class="section-header d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <p class="section-tag">You Might Like</p>
+                <h2 class="section-title">Recommended for You</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="rec-carousel-nav">
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="prev"><i
+                        class="fas fa-chevron-left"></i></button>
+                <button class="rec-nav-btn" data-bs-target="#recCarousel" data-bs-slide="next"><i
+                        class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
 
+        <div id="recCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row g-3">
+
+                        {% for i in related_product %}
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-image-area">
+                                    <div class="product-actions">
+                                        <button class="action-btn"><i class="fas fa-heart"></i></button>
+                                        <button class="action-btn"><i class="fas fa-eye"></i></button>
+                                    </div>
+                                    <img src="{{ i.image.url }}" alt="{{ i.name }}">
+                                </div>
+                                <div class="product-body">
+                                    <div class="brand-tag">{{ i.name }}</div>
+                                    <p class="product-title">{{ i.desc|clean_desc }}</p>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-price">Rs.{{ i.price }}</div>
+                                    <button class="btn-add-cart"><i class="fas fa-bag-shopping"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showAllReviews() {
+        document.querySelectorAll('.review-hidden').forEach(function (card) {
+            card.style.display = 'block';
+        });
+        document.getElementById('viewAllBtn').style.display = 'none';
+    }
+</script>
 
 <script src="{% static 'js/product_detail.js' %}"></script>
-
-
 {% endblock content %}

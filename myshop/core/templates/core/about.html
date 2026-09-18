@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- ==================== ABOUT HERO ==================== -->
+<section class="hero-section">
+    <div class="hero-slide slide-1">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center animate-up">
+                    <span class="hero-label">Since 2025</span>
+                    <h1>Built by Shoppers,<br>For Shoppers</h1>
+                    <p>Myshop started as a simple idea — make premium electronics and fashion
+                        <strong>easy to find, easy to trust, and easy to afford</strong>.
+                        Here's a bit about who we are.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== OUR STORY ==================== -->
+<section class="section-py">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <div class="quote-card">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p class="quote-text">We built Myshop around one rule — curate what we'd
+                        actually want to buy ourselves, then price it honestly.</p>
+                    <div class="quote-divider"></div>
+                    <span class="quote-sign">— The Myshop Team</span>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <p class="section-tag">Our Story</p>
+                <h2 class="section-title">From an Idea to Your Doorstep</h2>
+                <div class="section-line"></div>
+                <p style="color:var(--ink-muted);line-height:1.8;margin-top:16px;">
+                    We got tired of choosing between <strong>"cheap and unreliable"</strong> or
+                    <strong>"good but overpriced."</strong> So we built Myshop around one rule:
+                    curate what we'd actually want to buy ourselves, then price it honestly.
+                </p>
+                <p style="color:var(--ink-muted);line-height:1.8;">
+                    Every product on this site — from laptops to everyday fashion — is picked with
+                    that same standard. <strong>No filler, no gimmicks.</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== STATS (animated count-up) ==================== -->
+<section class="promo-banner">
+    <div class="container">
+        <div class="row g-4 text-center" id="statsRow">
+            <div class="col-6 col-md-3">
+                <h2 class="stat-num" data-target="50" style="color:var(--accent);font-family:'Playfair Display',serif;">0</h2>
+                <p style="color:rgba(255,255,255,0.7);"><strong>Brands</strong> Curated</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 class="stat-num" data-target="10000" style="color:var(--accent);font-family:'Playfair Display',serif;">0</h2>
+                <p style="color:rgba(255,255,255,0.7);"><strong>Happy</strong> Customers</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 class="stat-num" data-target="1200" style="color:var(--accent);font-family:'Playfair Display',serif;">0</h2>
+                <p style="color:rgba(255,255,255,0.7);"><strong>Products</strong> Listed</p>
+            </div>
+            <div class="col-6 col-md-3">
+                <h2 style="color:var(--accent);font-family:'Playfair Display',serif;">24/7</h2>
+                <p style="color:rgba(255,255,255,0.7);"><strong>Support</strong> Available</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== WHY SHOP WITH US ==================== -->
+<section class="section-py">
+    <div class="container">
+        <div class="section-header text-center mb-4">
+            <p class="section-tag">Why Myshop</p>
+            <h2 class="section-title">What Sets Us Apart</h2>
+            <div class="section-line centered"></div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-gem"></i></div>
+                    <div>
+                        <h6>Curated Quality</h6>
+                        <p>Every item is <strong>hand-picked</strong>, not just listed.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <div>
+                        <h6>Honest Pricing</h6>
+                        <p>No inflated "discounts" — <strong>fair prices</strong> year-round.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <div>
+                        <h6>Fast Delivery</h6>
+                        <p><strong>Quick, tracked</strong> shipping across Nepal.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="feature-item">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <div>
+                        <h6>Real Support</h6>
+                        <p><strong>Actual humans</strong>, ready to help anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== CTA ==================== -->
+<section class="category-tabs">
+    <div class="container text-center">
+        <p class="section-tag">Have Questions?</p>
+        <h2 class="section-title">We'd Love to Hear From You</h2>
+        <div class="section-line centered"></div>
+        <a href="{% url 'contact' %}" class="btn-primary-custom mt-3">
+            Contact Us <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+
+<!-- Small CSS + JS just for this page's interactivity -->
+<style>
+    .quote-card {
+        background: linear-gradient(135deg, #fdfaf5, #f5ecd8);
+        border: 1px solid rgba(200,169,110,0.35);
+        border-radius: 16px;
+        padding: 48px 36px;
+        position: relative;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .quote-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 28px 60px rgba(0,0,0,0.14);
+    }
+    .quote-icon {
+        font-size: 28px;
+        color: var(--accent);
+        opacity: 0.6;
+        margin-bottom: 16px;
+        display: block;
+    }
+    .quote-text {
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
+        line-height: 1.5;
+        color: #2a2a2a;
+        margin-bottom: 20px;
+    }
+    .quote-divider {
+        width: 40px;
+        height: 2px;
+        background: var(--accent);
+        margin-bottom: 12px;
+    }
+    .quote-sign {
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+    }
+</style>
+
+<script>
+    // Animate the stat numbers when they scroll into view
+    document.addEventListener('DOMContentLoaded', function () {
+        const statEls = document.querySelectorAll('.stat-num');
+        const animate = (el) => {
+            const target = parseInt(el.dataset.target, 10);
+            let current = 0;
+            const step = Math.max(1, Math.floor(target / 60));
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                el.textContent = current.toLocaleString() + '+';
+            }, 20);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animate(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        statEls.forEach(el => observer.observe(el));
+    });
+</script>
+
+{% endblock content %}

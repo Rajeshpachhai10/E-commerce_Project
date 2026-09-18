@@ -1644,3 +1644,8 @@ img {
 .page-btn:hover:not(.active) {
     background: #f5f5f5;
 }
+
+
+.dropdown-toggle::after {
+    display: none;
+}

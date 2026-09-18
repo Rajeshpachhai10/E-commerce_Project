@@ -32,6 +32,9 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
+
+from decouple import config
+
 # Esewa Secret key
 ESEWA_SECRET_KEY = config('ESEWA_SECRET_KEY')
 ESEWA_PRODUCT_CODE = config('ESEWA_PRODUCT_CODE')
@@ -43,6 +46,7 @@ ESEWA_STATUS_CHECK_URL = config('ESEWA_STATUS_CHECK_URL')
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -57,10 +61,23 @@ EXTERNAL_APPS = [
     "core",
     "accounts",
     'django_ckeditor_5',
+    'cart',
+    'payments',
 ]
 
 INSTALLED_APPS.extend(EXTERNAL_APPS)
 
+
+JAZZMIN_SETTINGS = {
+    "site_title": "MyShop Admin",
+    "site_header": "MyShop",
+    "site_brand": "MyShop",
+    "welcome_sign": "Welcome to the MyShop Admin Panel",
+    "copyright": "MyShop",
+    "show_ui_builder": True,
+    "navigation_expanded": True,
+    "changeform_format": "horizontal_tabs",
+} 
 
 
 
@@ -89,6 +106,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "core.middleware.NoCacheMiddleware",  
 ]
 
 ROOT_URLCONF = "myshop.urls"
@@ -103,10 +121,13 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'cart.context_processor.cart_total_amount'
             ],
         },
     },
 ]
+
+CART_SESSION_ID = 'cart'
 
 WSGI_APPLICATION = "myshop.wsgi.application"
 AUTH_USER_MODEL = "accounts.CustomUser"
@@ -147,7 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kathmandu"
 
 USE_I18N = True
 

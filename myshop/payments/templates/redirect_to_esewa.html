@@ -1,0 +1,43 @@
+
+<style>
+  .redirect-wrap {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .redirect-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #ece7dd;
+    border-top-color: #c9a227;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .redirect-wrap p {
+    color: #6b6b6b;
+    font-size: 15px;
+  }
+</style>
+
+<div class="redirect-wrap">
+  <div class="redirect-spinner"></div>
+  <p>Redirecting you to eSewa to complete your payment…</p>
+</div>
+
+<form id="esewaForm" action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
+  {% for key, value in data.items %}
+  <input type="hidden" name="{{ key }}" value="{{ value }}">
+  {% endfor %}
+</form>
+
+<script>
+  document.getElementById("esewaForm").submit();
+</script>
+

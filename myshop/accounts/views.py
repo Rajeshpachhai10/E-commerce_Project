@@ -4,7 +4,9 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm , ProfileForm
+from .models import *
+from payments.models import Order
 
 # Create your views here.
 
@@ -68,4 +70,47 @@ def password_change(request):
         form = PasswordChangeForm(user=request.user)
 
     return render(request, 'accounts/password_change.html', {'form': form})
+
+
+
+'''
+=======================Profile Management========================================================
+'''
+@login_required(login_url="login")
+def profile_dashboard(request):
+    return render(request,"profile/dashboard.html")
+
+
+@login_required(login_url="login")
+def profile(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile updated successfully!")
+            return redirect('profile')
+        else:
+            messages.error(request, "Please fix the errors below.")
+    else:
+        form = ProfileForm(instance=profile)
+
+    context = {
+        'form': form,
+        'profile': profile,
+    }
+    return render(request, "profile/profile.html", context)
+
+
+@login_required(login_url="login")
+def my_order(request):
+    orders = (
+        Order.objects
+        .filter(transaction__user=request.user)
+        .select_related('transaction')
+        .prefetch_related('items')
+        .order_by('-transaction__created_at')
+    )
+    return render(request, "profile/my_order.html", {"orders": orders})
         

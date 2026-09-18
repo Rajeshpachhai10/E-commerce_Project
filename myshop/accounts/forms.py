@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
+from django import forms
 from django.contrib.auth import get_user_model
-# from .models import CustomUser
+from .models import *
 
 User = get_user_model()    
 
@@ -29,4 +30,37 @@ class LoginForm(AuthenticationForm):
         self.fields['username'].label = 'Email'
         self.fields['username'].widget.attrs['placeholder'] = 'Enter your email'
         self.fields['password'].widget.attrs['placeholder'] = 'Enter your password'
-    
+
+
+    def clean_username(self):
+        email = self.cleaned_data.get('username')
+        try:
+            user = User.objects.get(email=email)
+            return user.username
+        except User.DoesNotExist:
+            return email
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['profile_picture', 'dob', 'bio']
+        widgets = {
+            'dob': forms.DateInput(attrs={
+                'type': 'date',
+                'class': 'form-control',
+                'placeholder': 'Select your date of birth',
+            }),
+            'bio': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': "Share a little about yourself — your interests, what you're passionate about, or anything you'd like others to know!",
+            }),
+            'profile_picture': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+        labels = {
+            'dob': 'Date of Birth',
+            'bio': 'About You',
+            'profile_picture': 'Profile Picture',
+        }

@@ -1,0 +1,67 @@
+{% extends 'profile_dashboard.html' %}
+{% load static %}
+
+{% block title %}My Orders{% endblock %}
+{% block page_title %}My Orders{% endblock %}
+{% block page_subtitle %}View your order history{% endblock %}
+
+{% block maincontent %}
+<div class="row">
+    <div class="col-12">
+        {% if orders %}
+        {% for order in orders %}
+        <div class="card mb-4">
+            <div class="card-header p-3 pb-0 d-flex justify-content-between align-items-start">
+                <div>
+                    <h6 class="mb-0">Order #{{ order.id }}</h6>
+                    <p class="text-sm mb-0">Placed on {{ order.transaction.created_at|date:"M d, Y" }}</p>
+                </div>
+                {% if order.transaction.status == 'COMPLETE' %}
+                <span class="badge bg-gradient-success">Complete</span>
+                {% elif order.transaction.status == 'PENDING' %}
+                <span class="badge bg-gradient-warning">Pending</span>
+                {% else %}
+                <span class="badge bg-gradient-danger">{{ order.transaction.status }}</span>
+                {% endif %}
+            </div>
+            <div class="card-body p-3">
+                <p class="text-sm mb-3">
+                    <strong class="text-dark">Transaction Code:</strong>&nbsp;
+                    {{ order.transaction.transaction_code|default:"—" }}
+                </p>
+
+                <ul class="list-group">
+                    {% for item in order.items.all %}
+                    <li class="list-group-item border-0 ps-0 text-sm d-flex align-items-center gap-3">
+                        {% if item.image %}
+                        <img src="{{ item.image }}" alt="{{ item.name }}" class="rounded"
+                            style="width: 56px; height: 56px; object-fit: cover;">
+                        {% endif %}
+                        <div class="flex-grow-1">
+                            <strong class="text-dark">{{ item.name }}</strong><br>
+                            Rs. {{ item.price }} &times; {{ item.quantity }}
+                        </div>
+                        <div class="text-dark">
+                            Rs. {{ item.line_total }}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="text-end mt-3">
+                    <strong class="text-dark">Total: Rs. {{ order.transaction.total_amount }}</strong>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="card">
+            <div class="card-body text-center p-5">
+                <h6 class="mb-1">No orders yet</h6>
+                <p class="text-sm text-muted mb-0">When you make a purchase, it'll show up here.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

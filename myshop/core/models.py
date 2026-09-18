@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import timedelta
 from cloudinary.models import CloudinaryField
 from django_ckeditor_5.fields import CKEditor5Field
+from accounts.models import CustomUser
 
 
 
@@ -65,4 +66,22 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.product.name
+
+
+class Review(models.Model):
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    product=models.ForeignKey(Product, on_delete=models.CASCADE,related_name='reviews')
+    rating=models.PositiveSmallIntegerField()
+    feedback=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.created_at.strftime('%Y-%m-%d')}"
 

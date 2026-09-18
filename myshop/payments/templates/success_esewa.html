@@ -1,0 +1,109 @@
+
+
+<style>
+  .payment-result-wrap {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: #faf8f4;
+  }
+  .payment-card {
+    max-width: 480px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(20, 20, 20, 0.08);
+    padding: 48px 40px;
+    text-align: center;
+    border-top: 4px solid #c9a227;
+    animation: cardRise 0.5s ease-out;
+  }
+  @keyframes cardRise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .status-icon-success {
+    width: 84px; height: 84px; margin: 0 auto 20px;
+    border-radius: 50%; background: #eaf7ee;
+    display: flex; align-items: center; justify-content: center;
+    animation: popIn 0.4s ease-out 0.1s both;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0); } 70% { transform: scale(1.1); } 100% { transform: scale(1); }
+  }
+  .status-icon-success svg { width: 42px; height: 42px; }
+  .status-icon-success circle { stroke: #2e9e5b; }
+  .status-icon-success path {
+    stroke: #2e9e5b; stroke-dasharray: 30; stroke-dashoffset: 30;
+    animation: drawCheck 0.4s ease-out 0.4s forwards;
+  }
+  @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+  .payment-card h2 {
+    font-family: 'Playfair Display', serif; font-size: 28px; color: #1a1a1a; margin-bottom: 8px;
+  }
+  .payment-card .subtext {
+    font-family: 'DM Sans', sans-serif; color: #6b6b6b; font-size: 15px; margin-bottom: 28px;
+  }
+  .payment-details {
+    background: #faf8f4; border-radius: 10px; padding: 20px 24px;
+    text-align: left; margin-bottom: 28px; font-family: 'DM Sans', sans-serif;
+  }
+  .payment-details .row {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    font-size: 14px; color: #444; border-bottom: 1px solid #ece7dd;
+  }
+  .payment-details .row:last-child { border-bottom: none; }
+  .payment-details .row span:first-child { color: #8a8a8a; }
+  .payment-details .row span:last-child { font-weight: 600; color: #1a1a1a; }
+  .payment-actions a {
+    display: inline-block; font-family: 'DM Sans', sans-serif; font-weight: 600;
+    font-size: 14px; padding: 13px 30px; border-radius: 8px; text-decoration: none;
+    margin: 6px; transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary-gold { background: #c9a227; color: #fff; }
+  .btn-primary-gold:hover {
+    transform: translateY(-2px); box-shadow: 0 6px 16px rgba(201, 162, 39, 0.35); color: #fff;
+  }
+</style>
+
+<div class="payment-result-wrap">
+  <div class="payment-card">
+
+    <div class="status-icon-success">
+      <svg viewBox="0 0 52 52" fill="none">
+        <circle cx="26" cy="26" r="24" stroke-width="3"/>
+        <path d="M15 27l7 7 15-15" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <h2>Payment Successful</h2>
+    <p class="subtext">Thank you — your order is confirmed and on its way.</p>
+
+    <div class="payment-details">
+      <div class="row">
+        <span>Transaction ID</span>
+        <span>{{ transaction.transaction_uuid }}</span>
+      </div>
+      <div class="row">
+        <span>eSewa Reference</span>
+        <span>{{ transaction.transaction_code }}</span>
+      </div>
+      <div class="row">
+        <span>Amount Paid</span>
+        <span>Rs. {{ transaction.total_amount }}</span>
+      </div>
+      <div class="row">
+        <span>Status</span>
+        <span>{{ transaction.status }}</span>
+      </div>
+    </div>
+
+    <div class="payment-actions">
+      <a href="{% url 'index' %}" class="btn-primary-gold">Continue Shopping</a>
+    </div>
+
+  </div>
+</div>
+
