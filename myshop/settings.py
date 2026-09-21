@@ -61,6 +61,7 @@ EXTERNAL_APPS = [
     "core",
     "accounts",
     'django_ckeditor_5',
+    'cart',
     'payments',
 ]
 
