@@ -64,7 +64,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     def new_badge(self, obj):
         if obj.is_new():
-            return format_html('<span style="color:green; font-weight:bold;">New</span>')
+            return format_html('<span style="color:green; font-weight:bold;">{}</span>', "New")
         return ""
     new_badge.short_description = "Status"
 
